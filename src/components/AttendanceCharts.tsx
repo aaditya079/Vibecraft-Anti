@@ -68,42 +68,42 @@ export default function AttendanceCharts({ results }: Props) {
     <div className="space-y-6">
       {/* Overview Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-zinc-900/40 border border-white/[0.08] rounded-2xl p-4 backdrop-blur-xl flex items-center gap-4 hover:border-white/[0.14] transition-all">
-          <div className="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-emerald-400">
+        <div className="bg-white/80 dark:bg-zinc-900/40 border border-black/[0.06] dark:border-white/[0.08] rounded-2xl p-4 backdrop-blur-xl flex items-center gap-4 shadow-sm dark:shadow-none hover:border-black/[0.12] dark:hover:border-white/[0.14] transition-all">
+          <div className="w-10 h-10 rounded-xl bg-black/[0.04] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.08] flex items-center justify-center text-emerald-600 dark:text-emerald-400">
             <ShieldCheck className="w-5 h-5" />
           </div>
           <div>
-            <span className="text-xs text-zinc-400">Compliant Subjects (≥75%)</span>
-            <div className="text-2xl font-semibold tracking-tight text-white">
+            <span className="text-xs text-zinc-600 dark:text-zinc-400">Compliant Subjects (≥75%)</span>
+            <div className="text-2xl font-semibold tracking-tight text-zinc-900 dark:text-white">
               {results.subjectResults.filter(s => s.currentPercentage >= 75).length} <span className="text-xs text-zinc-500 font-normal">of {results.subjectResults.length}</span>
             </div>
-            <p className="text-xs text-emerald-400/90 mt-0.5">Meeting university requirement</p>
+            <p className="text-xs text-emerald-600 dark:text-emerald-400/90 mt-0.5">Meeting attendance requirement</p>
           </div>
         </div>
 
-        <div className="bg-zinc-900/40 border border-white/[0.08] rounded-2xl p-4 backdrop-blur-xl flex items-center gap-4 hover:border-white/[0.14] transition-all">
-          <div className="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-purple-400">
+        <div className="bg-white/80 dark:bg-zinc-900/40 border border-black/[0.06] dark:border-white/[0.08] rounded-2xl p-4 backdrop-blur-xl flex items-center gap-4 shadow-sm dark:shadow-none hover:border-black/[0.12] dark:hover:border-white/[0.14] transition-all">
+          <div className="w-10 h-10 rounded-xl bg-black/[0.04] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.08] flex items-center justify-center text-purple-600 dark:text-purple-400">
             <Award className="w-5 h-5" />
           </div>
           <div>
-            <span className="text-xs text-zinc-400">Distinction Potential (≥90%)</span>
-            <div className="text-2xl font-semibold tracking-tight text-white">
+            <span className="text-xs text-zinc-600 dark:text-zinc-400">Distinction Potential (≥90%)</span>
+            <div className="text-2xl font-semibold tracking-tight text-zinc-900 dark:text-white">
               {results.subjectResults.filter(s => s.canAchieve90).length} <span className="text-xs text-zinc-500 font-normal">Subjects</span>
             </div>
-            <p className="text-xs text-purple-300/80 mt-0.5">Achievable with attendance plan</p>
+            <p className="text-xs text-purple-600 dark:text-purple-300/80 mt-0.5">Achievable with attendance plan</p>
           </div>
         </div>
 
-        <div className="bg-zinc-900/40 border border-white/[0.08] rounded-2xl p-4 backdrop-blur-xl flex items-center gap-4 hover:border-white/[0.14] transition-all">
-          <div className="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-red-400">
+        <div className="bg-white/80 dark:bg-zinc-900/40 border border-black/[0.06] dark:border-white/[0.08] rounded-2xl p-4 backdrop-blur-xl flex items-center gap-4 shadow-sm dark:shadow-none hover:border-black/[0.12] dark:hover:border-white/[0.14] transition-all">
+          <div className="w-10 h-10 rounded-xl bg-black/[0.04] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.08] flex items-center justify-center text-red-500 dark:text-red-400">
             <AlertCircle className="w-5 h-5" />
           </div>
           <div>
-            <span className="text-xs text-zinc-400">Detention Exposure</span>
-            <div className="text-2xl font-semibold tracking-tight text-red-400">
+            <span className="text-xs text-zinc-600 dark:text-zinc-400">Detention Exposure</span>
+            <div className="text-2xl font-semibold tracking-tight text-red-600 dark:text-red-400">
               {results.subjectResults.filter(s => s.isIrreversibleDetention || s.currentPercentage < 75).length} <span className="text-xs text-zinc-500 font-normal">Subjects</span>
             </div>
-            <p className="text-xs text-zinc-400 mt-0.5">Action required before Nov 29</p>
+            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">Action required before Nov 29</p>
           </div>
         </div>
       </div>
@@ -112,20 +112,20 @@ export default function AttendanceCharts({ results }: Props) {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         {/* Main Bar Chart: Subject Attendance Health */}
-        <div className="lg:col-span-2 bg-zinc-900/40 border border-white/[0.08] rounded-2xl p-5 backdrop-blur-xl">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 border-b border-white/[0.06] gap-2">
+        <div className="lg:col-span-2 bg-white/80 dark:bg-zinc-900/40 border border-black/[0.06] dark:border-white/[0.08] rounded-2xl p-5 backdrop-blur-xl shadow-sm dark:shadow-none transition-colors">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 border-b border-black/[0.06] dark:border-white/[0.06] gap-2">
             <div>
-              <h3 className="font-semibold text-sm text-white">Subject Attendance Profiles</h3>
-              <p className="text-xs text-zinc-400 mt-0.5">
+              <h3 className="font-semibold text-sm text-zinc-900 dark:text-white">Subject Attendance Profiles</h3>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
                 Evaluated against the 75% baseline and 90% distinction thresholds.
               </p>
             </div>
-            <div className="flex items-center gap-3 text-xs text-zinc-400">
+            <div className="flex items-center gap-3 text-xs text-zinc-500 dark:text-zinc-400">
               <span className="flex items-center gap-1.5">
-                <span className="w-2 h-0.5 bg-red-400 inline-block"></span> 75% Floor
+                <span className="w-2 h-0.5 bg-red-500 inline-block"></span> 75% Floor
               </span>
               <span className="flex items-center gap-1.5">
-                <span className="w-2 h-0.5 bg-purple-400 inline-block"></span> 90% Target
+                <span className="w-2 h-0.5 bg-purple-500 inline-block"></span> 90% Target
               </span>
             </div>
           </div>
@@ -135,39 +135,39 @@ export default function AttendanceCharts({ results }: Props) {
               <BarChart data={barData} margin={{ top: 20, right: 20, left: -15, bottom: 20 }}>
                 <XAxis 
                   dataKey="name" 
-                  stroke="#71717a" 
+                  stroke="#8e8e93" 
                   fontSize={11}
                   tickLine={false}
-                  axisLine={{ stroke: 'rgba(255, 255, 255, 0.08)' }}
+                  axisLine={{ stroke: 'rgba(128, 128, 128, 0.2)' }}
                 />
                 <YAxis 
-                  stroke="#71717a" 
+                  stroke="#8e8e93" 
                   fontSize={11} 
                   domain={[0, 100]} 
                   tickFormatter={v => `${v}%`}
                   tickLine={false}
-                  axisLine={{ stroke: 'rgba(255, 255, 255, 0.08)' }}
+                  axisLine={{ stroke: 'rgba(128, 128, 128, 0.2)' }}
                 />
                 <Tooltip
-                  cursor={{ fill: 'rgba(255, 255, 255, 0.03)' }}
+                  cursor={{ fill: 'rgba(128, 128, 128, 0.06)' }}
                   content={({ active, payload }) => {
                     if (active && payload && payload.length) {
                       const data = payload[0].payload;
                       return (
-                        <div className="bg-zinc-950/95 border border-white/10 rounded-xl p-3 backdrop-blur-2xl shadow-2xl text-xs space-y-1">
-                          <p className="font-semibold text-white">{data.fullName}</p>
+                        <div className="bg-white/95 dark:bg-zinc-950/95 border border-black/10 dark:border-white/10 rounded-xl p-3 backdrop-blur-2xl shadow-xl text-xs space-y-1 text-zinc-900 dark:text-white">
+                          <p className="font-semibold">{data.fullName}</p>
                           <p className="text-zinc-500">Code: {data.name}</p>
-                          <div className="pt-1.5 border-t border-white/[0.06] flex justify-between gap-4">
-                            <span className="text-zinc-400">Current Standing:</span>
-                            <span className="font-medium text-emerald-400">{data.current}%</span>
+                          <div className="pt-1.5 border-t border-black/[0.06] dark:border-white/[0.06] flex justify-between gap-4">
+                            <span className="text-zinc-500 dark:text-zinc-400">Current Standing:</span>
+                            <span className="font-medium text-emerald-600 dark:text-emerald-400">{data.current}%</span>
                           </div>
                           <div className="flex justify-between gap-4">
-                            <span className="text-zinc-400">Peak Achievable:</span>
-                            <span className="font-medium text-zinc-200">{data.maxPossible}%</span>
+                            <span className="text-zinc-500 dark:text-zinc-400">Peak Achievable:</span>
+                            <span className="font-medium text-zinc-800 dark:text-zinc-200">{data.maxPossible}%</span>
                           </div>
                           <div className="flex justify-between gap-4">
-                            <span className="text-zinc-400">For ≥75%:</span>
-                            <span className="font-medium text-amber-300">
+                            <span className="text-zinc-500 dark:text-zinc-400">For ≥75%:</span>
+                            <span className="font-medium text-amber-600 dark:text-amber-300">
                               {data.toAttend75 === 0 ? 'Compliant' : `Attend ${data.toAttend75} more`}
                             </span>
                           </div>
@@ -182,7 +182,7 @@ export default function AttendanceCharts({ results }: Props) {
                   stroke="#FF453A" 
                   strokeDasharray="3 3" 
                   strokeWidth={1}
-                  label={{ value: '75% Minimum', fill: '#FF453A', fontSize: 10, position: 'right' }} 
+                  label={{ value: '75% Floor', fill: '#FF453A', fontSize: 10, position: 'right' }} 
                 />
                 <ReferenceLine 
                   y={90} 
@@ -202,10 +202,10 @@ export default function AttendanceCharts({ results }: Props) {
         </div>
 
         {/* Status Distribution Donut Chart */}
-        <div className="bg-zinc-900/40 border border-white/[0.08] rounded-2xl p-5 backdrop-blur-xl flex flex-col justify-between">
+        <div className="bg-white/80 dark:bg-zinc-900/40 border border-black/[0.06] dark:border-white/[0.08] rounded-2xl p-5 backdrop-blur-xl flex flex-col justify-between shadow-sm dark:shadow-none transition-colors">
           <div>
-            <h3 className="font-semibold text-sm text-white">Status Breakdown</h3>
-            <p className="text-xs text-zinc-400 mt-0.5">
+            <h3 className="font-semibold text-sm text-zinc-900 dark:text-white">Status Breakdown</h3>
+            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
               Subject risk allocation
             </p>
           </div>
@@ -232,7 +232,7 @@ export default function AttendanceCharts({ results }: Props) {
                     if (active && payload && payload.length) {
                       const data = payload[0];
                       return (
-                        <div className="bg-zinc-950/90 border border-white/10 px-3 py-1.5 rounded-xl text-xs backdrop-blur-xl">
+                        <div className="bg-white/95 dark:bg-zinc-950/90 border border-black/10 dark:border-white/10 px-3 py-1.5 rounded-xl text-xs backdrop-blur-xl shadow-lg text-zinc-900 dark:text-white">
                           <span style={{ color: data.payload.color }} className="font-medium">
                             {data.name}: {data.value} subjects
                           </span>
@@ -245,14 +245,14 @@ export default function AttendanceCharts({ results }: Props) {
                 <Legend 
                   verticalAlign="bottom" 
                   height={36} 
-                  formatter={(value) => <span className="text-xs text-zinc-400">{value}</span>}
+                  formatter={(value) => <span className="text-xs text-zinc-600 dark:text-zinc-400">{value}</span>}
                 />
               </PieChart>
             </ResponsiveContainer>
           </div>
 
-          <div className="pt-3 border-t border-white/[0.06] text-center text-xs text-zinc-400">
-            Overall Health: <span className="text-white font-medium">{results.overallCurrentPercentage}%</span>
+          <div className="pt-3 border-t border-black/[0.06] dark:border-white/[0.06] text-center text-xs text-zinc-500 dark:text-zinc-400">
+            Overall Health: <span className="text-zinc-900 dark:text-white font-medium">{results.overallCurrentPercentage}%</span>
           </div>
         </div>
 
