@@ -17,16 +17,21 @@ import {
   BarChart2,
   FileCheck,
   Sun,
-  Moon
+  Moon,
+  Compass
 } from 'lucide-react';
 import { CLASS_SECTIONS, SEMESTER_CONFIG, type ClassSection } from './data/timetables';
 import { calculateAttendance, type SubjectAttendanceResult } from './utils/calculator';
 import AttendanceCharts from './components/AttendanceCharts';
 import ODSimulator from './components/ODSimulator';
 import AttendanceAdvisorChat from './components/AttendanceAdvisorChat';
+import ClassroomLocator from './components/ClassroomLocator';
 import confetti from 'canvas-confetti';
 
 export default function App() {
+  // Mode switcher: 'locator' (Round 2) vs 'attendance' (Round 1)
+  const [appMode, setAppMode] = useState<'locator' | 'attendance'>('locator');
+
   const [selectedSectionId, setSelectedSectionId] = useState<string>('ii-bme');
   const [planningDate, setPlanningDate] = useState<string>(SEMESTER_CONFIG.defaultToday);
   const [soundEnabled, setSoundEnabled] = useState<boolean>(true);
@@ -154,19 +159,52 @@ export default function App() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-xl bg-black/[0.05] dark:bg-white/[0.08] border border-black/[0.08] dark:border-white/[0.12] flex items-center justify-center text-zinc-900 dark:text-white shadow-sm">
-              <Calendar className="w-4 h-4 text-zinc-700 dark:text-zinc-200" />
+              {appMode === 'locator' ? (
+                <Compass className="w-4 h-4 text-blue-500" />
+              ) : (
+                <Calendar className="w-4 h-4 text-emerald-500" />
+              )}
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <span className="font-semibold text-sm sm:text-base tracking-tight text-zinc-900 dark:text-white">
-                  Attendance
+                  {appMode === 'locator' ? 'Classroom' : 'Attendance'}
                 </span>
-                <span className="text-zinc-500 font-normal text-sm sm:text-base">Intelligence</span>
-                <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-black/[0.04] dark:bg-white/[0.06] text-zinc-600 dark:text-zinc-400 border border-black/[0.06] dark:border-white/[0.08]">
-                  Academic Year 2026
+                <span className="text-zinc-500 font-normal text-sm sm:text-base">
+                  {appMode === 'locator' ? 'Locator' : 'Intelligence'}
                 </span>
               </div>
             </div>
+          </div>
+
+          {/* Segmented Switcher for Round 1 & Round 2 */}
+          <div className="flex items-center p-1 rounded-xl bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08]">
+            <button
+              onClick={() => setAppMode('locator')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 ${
+                appMode === 'locator'
+                  ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-xs'
+                  : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
+              }`}
+            >
+              <Compass className="w-3.5 h-3.5 text-blue-500" />
+              <span className="hidden sm:inline">Free Class Locator</span>
+              <span className="sm:hidden">Locator</span>
+              <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold">Round 2</span>
+            </button>
+            <button
+              onClick={() => setAppMode('attendance')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 ${
+                appMode === 'attendance'
+                  ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-xs'
+                  : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
+              }`}
+            >
+              <GraduationCap className="w-3.5 h-3.5 text-emerald-500" />
+              <span className="hidden sm:inline">Attendance Advisor</span>
+              <span className="sm:hidden">Attendance</span>
+              <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold">Round 1</span>
+            </button>
           </div>
 
           <div className="flex items-center gap-2">
@@ -208,8 +246,11 @@ export default function App() {
 
       {/* Main Container */}
       <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8 flex-1 w-full space-y-6">
-        
-        {/* Apple Critical Alert Banner */}
+        {appMode === 'locator' ? (
+          <ClassroomLocator />
+        ) : (
+          <>
+            {/* Apple Critical Alert Banner */}
         {hasIrreversible && (
           <div className="relative overflow-hidden rounded-2xl border border-red-500/30 bg-red-500/[0.08] dark:bg-red-950/20 backdrop-blur-xl p-5 shadow-sm dark:shadow-lg dark:shadow-red-950/20 transition-all">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -848,19 +889,22 @@ export default function App() {
             </div>
           </div>
         )}
-
+          </>
+        )}
       </main>
 
-      {/* Apple Intelligence Style Advisor Chat */}
-      <AttendanceAdvisorChat 
-        section={selectedSection} 
-        results={results} 
-        planningDate={planningDate} 
-      />
+      {/* Apple Intelligence Style Advisor Chat for Round 1 */}
+      {appMode === 'attendance' && (
+        <AttendanceAdvisorChat 
+          section={selectedSection} 
+          results={results} 
+          planningDate={planningDate} 
+        />
+      )}
 
       {/* Footer */}
       <footer className="border-t border-black/[0.06] dark:border-white/[0.06] bg-transparent py-4 text-center text-xs text-zinc-500">
-        Academic Attendance Intelligence · 2026 Planning System
+        Campus Resource Locator & Attendance Intelligence · 2026
       </footer>
     </div>
   );
