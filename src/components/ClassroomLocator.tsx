@@ -14,17 +14,23 @@ import {
   Calendar, 
   Share2, 
   Check,
-  Clock
+  Clock,
+  Compass,
+  Layers,
+  MessageCircle
 } from 'lucide-react';
 import { type DayOfWeek, type Room } from '../data/rooms';
 import { 
   getAllFloorsStatus, 
   parseNaturalLanguageQuery, 
   getPeriodFromTime,
-  type SearchResult
+  type SearchResult,
+  type RoomRealTimeStatus
 } from '../utils/roomFinder';
 import { askGeminiRoomLocator } from '../utils/aiRoomAssistant';
 import { SEMESTER_CONFIG } from '../data/timetables';
+import Building3DMap from './Building3DMap';
+import RoomDetailModal from './RoomDetailModal';
 
 const PRESET_QUERIES = [
   'I need an AC room on the ground floor for me and my team for the next 2 hours.',
@@ -35,6 +41,10 @@ const PRESET_QUERIES = [
 ];
 
 export default function ClassroomLocator() {
+  // Phase 2 View Mode: '3d' Map vs 'grid' List
+  const [activeViewMode, setActiveViewMode] = useState<'3d' | 'grid'>('3d');
+  const [selectedRoomForDetail, setSelectedRoomForDetail] = useState<RoomRealTimeStatus | null>(null);
+
   // Current time & day state
   const [selectedDay, setSelectedDay] = useState<DayOfWeek>('Monday');
   const [selectedPeriod, setSelectedPeriod] = useState<number>(1);
@@ -160,9 +170,9 @@ export default function ClassroomLocator() {
       <div className="relative overflow-hidden rounded-3xl bg-linear-to-b from-zinc-500/[0.05] via-transparent to-transparent border border-black/[0.06] dark:border-white/[0.08] p-6 sm:p-8 backdrop-blur-2xl">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 dark:bg-blue-400/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 text-xs font-medium">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-linear-to-r from-blue-500/10 to-indigo-500/10 border border-blue-500/25 text-blue-600 dark:text-blue-400 text-xs font-semibold">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Phase 1 Unlocked · The Smart-Search Floor Manager</span>
+              <span>Round 2 Finale · 3D Map, Live Countdown & Squad Share</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 dark:text-white">
               Free Classroom Locator
@@ -254,6 +264,42 @@ export default function ClassroomLocator() {
                 {preset}
               </button>
             ))}
+          </div>
+
+          {/* Phase 2 View Mode Switcher */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-5 border-t border-black/[0.06] dark:border-white/[0.06] mt-4">
+            <div className="flex items-center p-1 rounded-xl bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08]">
+              <button
+                onClick={() => setActiveViewMode('3d')}
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 ${
+                  activeViewMode === '3d'
+                    ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-xs'
+                    : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
+                }`}
+              >
+                <Compass className="w-3.5 h-3.5 text-blue-500" />
+                <span>3D Campus Model</span>
+                <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold">Phase 2</span>
+              </button>
+              <button
+                onClick={() => setActiveViewMode('grid')}
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 ${
+                  activeViewMode === 'grid'
+                    ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-xs'
+                    : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
+                }`}
+              >
+                <Layers className="w-3.5 h-3.5 text-emerald-500" />
+                <span>Floor-by-Floor Grid</span>
+                <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold">Phase 1</span>
+              </button>
+            </div>
+
+            <div className="text-xs text-zinc-500 font-medium flex items-center gap-2">
+              <span>⏱️ Live Ticking Countdown</span>
+              <span>·</span>
+              <span>📲 WhatsApp Squad Dispatch</span>
+            </div>
           </div>
         </div>
       </div>
@@ -386,30 +432,51 @@ export default function ClassroomLocator() {
                   </div>
                 </div>
 
-                <div className="pt-4 mt-4 border-t border-black/[0.06] dark:border-white/[0.06] flex items-center justify-between">
+                <div className="space-y-2 pt-4 mt-4 border-t border-black/[0.06] dark:border-white/[0.06]">
                   <button
-                    onClick={() => handleCopyLocation(match.room)}
-                    className="text-xs text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white flex items-center gap-1 transition"
+                    onClick={() => setSelectedRoomForDetail(match)}
+                    className="w-full py-2 px-3 rounded-xl bg-linear-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 active:scale-[0.98] text-white font-semibold text-xs transition shadow-xs flex items-center justify-center gap-1.5"
                   >
-                    {copiedRoomCode === match.room.code ? (
-                      <>
-                        <Check className="w-3.5 h-3.5 text-emerald-500" />
-                        <span className="text-emerald-600 dark:text-emerald-400 font-medium">Copied!</span>
-                      </>
-                    ) : (
-                      <>
-                        <Share2 className="w-3.5 h-3.5" />
-                        <span>Copy Details</span>
-                      </>
-                    )}
+                    <MessageCircle className="w-3.5 h-3.5 fill-current" />
+                    <span>Call the Squad · Live Countdown</span>
                   </button>
-                  <span className="text-[11px] font-medium text-blue-600 dark:text-blue-400">
-                    Guaranteed Safe
-                  </span>
+
+                  <div className="flex items-center justify-between text-xs pt-1">
+                    <button
+                      onClick={() => handleCopyLocation(match.room)}
+                      className="text-xs text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white flex items-center gap-1 transition"
+                    >
+                      {copiedRoomCode === match.room.code ? (
+                        <>
+                          <Check className="w-3.5 h-3.5 text-emerald-500" />
+                          <span className="text-emerald-600 dark:text-emerald-400 font-medium">Copied!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Share2 className="w-3.5 h-3.5" />
+                          <span>Copy Details</span>
+                        </>
+                      )}
+                    </button>
+                    <span className="text-[11px] font-medium text-blue-600 dark:text-blue-400">
+                      Guaranteed Safe
+                    </span>
+                  </div>
                 </div>
               </div>
             ))}
           </div>
+        </section>
+      )}
+
+      {/* Phase 2: 3D Campus Architectural Model View */}
+      {activeViewMode === '3d' && (
+        <section className="space-y-4">
+          <Building3DMap
+            selectedDay={selectedDay}
+            selectedPeriod={selectedPeriod}
+            onSelectRoom={(status) => setSelectedRoomForDetail(status)}
+          />
         </section>
       )}
 
@@ -707,7 +774,7 @@ export default function ClassroomLocator() {
                   </div>
 
                   {/* Card Bottom: Quick Actions */}
-                  <div className="pt-3 mt-3 border-t border-black/[0.04] dark:border-white/[0.04] flex items-center justify-between">
+                  <div className="pt-3 mt-3 border-t border-black/[0.04] dark:border-white/[0.04] flex items-center justify-between gap-2">
                     <button
                       onClick={() => handleCopyLocation(roomStatus.room)}
                       className="text-xs text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition flex items-center gap-1"
@@ -720,14 +787,18 @@ export default function ClassroomLocator() {
                       ) : (
                         <>
                           <Share2 className="w-3 h-3" />
-                          <span>Share Location</span>
+                          <span>Share</span>
                         </>
                       )}
                     </button>
 
-                    <div className="text-[11px] font-mono text-zinc-500">
-                      {roomStatus.room.building}
-                    </div>
+                    <button
+                      onClick={() => setSelectedRoomForDetail(roomStatus)}
+                      className="px-2.5 py-1 rounded-xl bg-emerald-500/10 hover:bg-emerald-500 text-emerald-700 hover:text-white dark:text-emerald-400 dark:hover:text-white text-xs font-semibold transition flex items-center gap-1.5"
+                    >
+                      <MessageCircle className="w-3.5 h-3.5 fill-current" />
+                      <span>Invite Squad</span>
+                    </button>
                   </div>
 
                 </div>
@@ -743,6 +814,14 @@ export default function ClassroomLocator() {
           </div>
         ))}
       </section>
+
+      {/* Phase 2: Live Countdown & "Call the Squad" Modal */}
+      <RoomDetailModal
+        roomStatus={selectedRoomForDetail}
+        onClose={() => setSelectedRoomForDetail(null)}
+        dayName={selectedDay}
+        periodNumber={selectedPeriod}
+      />
 
     </div>
   );
