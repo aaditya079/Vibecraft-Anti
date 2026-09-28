@@ -175,6 +175,7 @@ export function getAllFloorsStatus(day: DayOfWeek, currentPeriod: number): Floor
     'Ground Floor',
     '1st Floor',
     '2nd Floor',
+    '3rd Floor',
     '4th Floor',
     '5th Floor',
     '6th Floor',
@@ -244,6 +245,8 @@ export function parseNaturalLanguageQuery(
     floor = '1st Floor';
   } else if (/\b(2nd|second|floor 2|level 2)\b/i.test(query)) {
     floor = '2nd Floor';
+  } else if (/\b(3rd|third|floor 3|level 3)\b/i.test(query)) {
+    floor = '3rd Floor';
   } else if (/\b(4th|fourth|floor 4|level 4)\b/i.test(query)) {
     floor = '4th Floor';
   } else if (/\b(5th|fifth|floor 5|level 5)\b/i.test(query)) {

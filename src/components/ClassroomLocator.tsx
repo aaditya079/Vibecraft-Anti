@@ -295,7 +295,7 @@ export default function ClassroomLocator() {
 
             <div className="text-xs text-zinc-500 font-medium flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-emerald-500" />
-              <span>Real-time availability across 7 floors</span>
+              <span>Real-time availability across 8 floors (Ground to 7th)</span>
             </div>
           </div>
         </div>
@@ -554,7 +554,7 @@ export default function ClassroomLocator() {
           {/* Floor Tabs */}
           <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
             <span className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mr-1">Floor:</span>
-            {['All', 'Ground Floor', '1st Floor', '2nd Floor', '4th Floor', '5th Floor', '6th Floor', '7th Floor'].map(floor => (
+            {['All', 'Ground Floor', '1st Floor', '2nd Floor', '3rd Floor', '4th Floor', '5th Floor', '6th Floor', '7th Floor'].map(floor => (
               <button
                 key={floor}
                 onClick={() => setSelectedFloor(floor)}

@@ -43,35 +43,42 @@ const ROOM_PLACEMENTS: RoomPlacement[] = [
   { id: 'ist-225', floorIndex: 2, x: -5, z: 3, w: 7.5, d: 4.8, h: 2.2 },
   { id: 'ist-227', floorIndex: 2, x: 5, z: 3, w: 7.5, d: 4.8, h: 2.2 },
 
-  // 4th Floor (floorIndex: 3)
-  { id: 'ist-411', floorIndex: 3, x: -5, z: 2.5, w: 7.5, d: 5.5, h: 2.2 },
-  { id: 'ist-416', floorIndex: 3, x: 5, z: 2.5, w: 7.5, d: 5.5, h: 2.2 },
-  { id: 'ist-418', floorIndex: 3, x: 0, z: -3.5, w: 14, d: 4.2, h: 2.2 },
+  // 3rd Floor (floorIndex: 3)
+  { id: 'ist-301', floorIndex: 3, x: -5, z: 2.5, w: 7.5, d: 5.5, h: 2.2 },
+  { id: 'ist-305', floorIndex: 3, x: 5, z: 2.5, w: 7.5, d: 5.5, h: 2.2 },
+  { id: 'ist-312', floorIndex: 3, x: -5, z: -3, w: 7.5, d: 4.8, h: 2.2 },
+  { id: 'ist-318', floorIndex: 3, x: 5, z: -3, w: 7.5, d: 4.8, h: 2.2 },
 
-  // 5th Floor (floorIndex: 4)
-  { id: 'ist-502', floorIndex: 4, x: -6.2, z: 3, w: 5.2, d: 4.5, h: 2.2 },
-  { id: 'ist-510', floorIndex: 4, x: 0, z: 3, w: 5.5, d: 4.5, h: 2.2 },
-  { id: 'ist-518', floorIndex: 4, x: 6.2, z: 3, w: 5.2, d: 4.5, h: 2.2 },
-  { id: 'ist-519', floorIndex: 4, x: -4.5, z: -3, w: 7.5, d: 4.5, h: 2.2 },
-  { id: 'ist-520', floorIndex: 4, x: 4.5, z: -3, w: 7.5, d: 4.5, h: 2.2 },
+  // 4th Floor (floorIndex: 4)
+  { id: 'ist-411', floorIndex: 4, x: -5, z: 2.5, w: 7.5, d: 5.5, h: 2.2 },
+  { id: 'ist-416', floorIndex: 4, x: 5, z: 2.5, w: 7.5, d: 5.5, h: 2.2 },
+  { id: 'ist-418', floorIndex: 4, x: 0, z: -3.5, w: 14, d: 4.2, h: 2.2 },
 
-  // 6th Floor (floorIndex: 5)
-  { id: 'ist-602', floorIndex: 5, x: -6.2, z: 3, w: 5.2, d: 4.5, h: 2.2 },
-  { id: 'ist-609', floorIndex: 5, x: 0, z: 3, w: 5.5, d: 4.5, h: 2.2 },
-  { id: 'ist-617', floorIndex: 5, x: 6.2, z: 3, w: 5.2, d: 4.5, h: 2.2 },
-  { id: 'ist-618', floorIndex: 5, x: -6.2, z: -3, w: 5.2, d: 4.5, h: 2.2 },
-  { id: 'ist-625', floorIndex: 5, x: 0, z: -3, w: 5.5, d: 4.5, h: 2.2 },
-  { id: 'ist-626', floorIndex: 5, x: 6.2, z: -3, w: 5.2, d: 4.5, h: 2.2 },
+  // 5th Floor (floorIndex: 5)
+  { id: 'ist-502', floorIndex: 5, x: -6.2, z: 3, w: 5.2, d: 4.5, h: 2.2 },
+  { id: 'ist-510', floorIndex: 5, x: 0, z: 3, w: 5.5, d: 4.5, h: 2.2 },
+  { id: 'ist-518', floorIndex: 5, x: 6.2, z: 3, w: 5.2, d: 4.5, h: 2.2 },
+  { id: 'ist-519', floorIndex: 5, x: -4.5, z: -3, w: 7.5, d: 4.5, h: 2.2 },
+  { id: 'ist-520', floorIndex: 5, x: 4.5, z: -3, w: 7.5, d: 4.5, h: 2.2 },
 
-  // 7th Floor (floorIndex: 6)
-  { id: 'ist-702', floorIndex: 6, x: -4.5, z: 0, w: 8.5, d: 9, h: 2.2 },
-  { id: 'ist-710', floorIndex: 6, x: 5, z: 0, w: 7.5, d: 9, h: 2.2 },
+  // 6th Floor (floorIndex: 6)
+  { id: 'ist-602', floorIndex: 6, x: -6.2, z: 3, w: 5.2, d: 4.5, h: 2.2 },
+  { id: 'ist-609', floorIndex: 6, x: 0, z: 3, w: 5.5, d: 4.5, h: 2.2 },
+  { id: 'ist-617', floorIndex: 6, x: 6.2, z: 3, w: 5.2, d: 4.5, h: 2.2 },
+  { id: 'ist-618', floorIndex: 6, x: -6.2, z: -3, w: 5.2, d: 4.5, h: 2.2 },
+  { id: 'ist-625', floorIndex: 6, x: 0, z: -3, w: 5.5, d: 4.5, h: 2.2 },
+  { id: 'ist-626', floorIndex: 6, x: 6.2, z: -3, w: 5.2, d: 4.5, h: 2.2 },
+
+  // 7th Floor (floorIndex: 7)
+  { id: 'ist-702', floorIndex: 7, x: -4.5, z: 0, w: 8.5, d: 9, h: 2.2 },
+  { id: 'ist-710', floorIndex: 7, x: 5, z: 0, w: 7.5, d: 9, h: 2.2 },
 ];
 
 const FLOOR_LABELS = [
   'Ground Floor',
   '1st Floor',
   '2nd Floor',
+  '3rd Floor',
   '4th Floor',
   '5th Floor',
   '6th Floor',
@@ -116,7 +123,7 @@ export default function Building3DMap({ selectedDay, selectedPeriod, onSelectRoo
     const height = container.clientHeight || 550;
 
     const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 1000);
-    camera.position.set(28, 30, 36);
+    camera.position.set(30, 32, 40);
     cameraRef.current = camera;
 
     // Renderer
@@ -137,7 +144,7 @@ export default function Building3DMap({ selectedDay, selectedPeriod, onSelectRoo
     controls.maxDistance = 85;
     controls.autoRotate = true;
     controls.autoRotateSpeed = 0.6;
-    controls.target.set(0, 12, 0);
+    controls.target.set(0, 14, 0);
     controlsRef.current = controls;
 
     // Lighting
@@ -176,8 +183,8 @@ export default function Building3DMap({ selectedDay, selectedPeriod, onSelectRoo
       }
       interactiveMeshes.length = 0;
 
-      // Render 7 Floors
-      for (let fIdx = 0; fIdx < 7; fIdx++) {
+      // Render All Building Floors
+      for (let fIdx = 0; fIdx < FLOOR_LABELS.length; fIdx++) {
         // Vertical position of this floor
         const floorY = fIdx * (baseFloorHeight * explosionGap);
 
@@ -344,8 +351,8 @@ export default function Building3DMap({ selectedDay, selectedPeriod, onSelectRoo
     if (!controlsRef.current || !cameraRef.current) return;
 
     if (fIdx === 'all') {
-      controlsRef.current.target.set(0, 12, 0);
-      cameraRef.current.position.set(28, 30, 36);
+      controlsRef.current.target.set(0, 14, 0);
+      cameraRef.current.position.set(30, 32, 40);
     } else {
       const targetY = fIdx * (4.2 * explosionGap) + 1.5;
       controlsRef.current.target.set(0, targetY, 0);
@@ -356,8 +363,8 @@ export default function Building3DMap({ selectedDay, selectedPeriod, onSelectRoo
   const handleResetCamera = () => {
     setFocusedFloor('all');
     if (controlsRef.current && cameraRef.current) {
-      controlsRef.current.target.set(0, 12, 0);
-      cameraRef.current.position.set(28, 30, 36);
+      controlsRef.current.target.set(0, 14, 0);
+      cameraRef.current.position.set(30, 32, 40);
     }
   };
 

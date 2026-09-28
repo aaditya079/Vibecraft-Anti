@@ -4,7 +4,7 @@ export interface Room {
   id: string;
   name: string;
   code: string;
-  floor: 'Ground Floor' | '1st Floor' | '2nd Floor' | '4th Floor' | '5th Floor' | '6th Floor' | '7th Floor';
+  floor: 'Ground Floor' | '1st Floor' | '2nd Floor' | '3rd Floor' | '4th Floor' | '5th Floor' | '6th Floor' | '7th Floor';
   floorNumber: number;
   building: string;
   capacity: number;
@@ -184,6 +184,68 @@ export const CAMPUS_ROOMS: Room[] = [
     hasWhiteboard: true,
     type: 'Smart Lecture Hall',
     description: 'Modern classroom with wall power strips, clean acoustic design, and ceiling-mounted projector.'
+  },
+
+  // 3rd Floor
+  {
+    id: 'ist-301',
+    name: 'Signal Processing & DSP Lab',
+    code: 'IST 301',
+    floor: '3rd Floor',
+    floorNumber: 3,
+    building: 'IST Block',
+    capacity: 45,
+    isAC: true,
+    hasProjector: true,
+    hasPowerSockets: true,
+    hasWhiteboard: true,
+    type: 'Laboratory',
+    description: 'Equipped with digital signal processing stations, MATLAB workstations, and high-speed network benches.'
+  },
+  {
+    id: 'ist-305',
+    name: 'Embedded Systems & IoT Hall',
+    code: 'IST 305',
+    floor: '3rd Floor',
+    floorNumber: 3,
+    building: 'IST Block',
+    capacity: 65,
+    isAC: true,
+    hasProjector: true,
+    hasPowerSockets: true,
+    hasWhiteboard: true,
+    type: 'Smart Lecture Hall',
+    description: 'Tiered seating hall equipped with interactive smart board, ceiling speakers, and dual AC units.'
+  },
+  {
+    id: 'ist-312',
+    name: 'Digital Innovation & Research Pod',
+    code: 'IST 312',
+    floor: '3rd Floor',
+    floorNumber: 3,
+    building: 'IST Block',
+    capacity: 35,
+    isAC: true,
+    hasProjector: true,
+    hasPowerSockets: true,
+    hasWhiteboard: true,
+    type: 'Discussion Room',
+    description: 'Acoustically isolated pod designed for student group projects, presentations, and code review sprints.'
+  },
+  {
+    id: 'ist-318',
+    name: 'Robotics & Automation Lecture Hall',
+    code: 'IST 318',
+    floor: '3rd Floor',
+    floorNumber: 3,
+    building: 'IST Block',
+    capacity: 60,
+    isAC: true,
+    hasProjector: true,
+    hasPowerSockets: true,
+    hasWhiteboard: true,
+    type: 'Smart Lecture Hall',
+    description: 'Spacious hall with perimeter power banks, HD display screen, and comfortable ergonomic seating.'
   },
 
   // 4th Floor
@@ -511,6 +573,10 @@ function mapSectionOccupancyToRooms(): Record<string, Record<DayOfWeek, RoomOccu
           targetRoomId = 'ist-626';
         } else if (codeUpper.includes('GNM102L') || nameUpper.includes('NSS')) {
           targetRoomId = 'ist-201';
+        } else if (codeUpper.includes('21BMC301J') || nameUpper.includes('DSP') || nameUpper.includes('SIGNAL PROCESSING')) {
+          targetRoomId = 'ist-301';
+        } else if (codeUpper.includes('21ECO103T') || nameUpper.includes('WIRELESS')) {
+          targetRoomId = 'ist-305';
         }
 
         if (targetRoomId && result[targetRoomId] && result[targetRoomId][day]) {
