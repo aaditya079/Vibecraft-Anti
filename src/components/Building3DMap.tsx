@@ -422,12 +422,12 @@ export default function Building3DMap({ selectedDay, selectedPeriod, onSelectRoo
               <span className="font-bold text-zinc-900 dark:text-white text-sm">
                 {hoveredRoom.room.code}
               </span>
-              <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+              <span className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${
                 hoveredRoom.isFree 
-                  ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400' 
-                  : 'bg-rose-500/15 text-rose-600 dark:text-rose-400'
+                  ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400' 
+                  : 'bg-rose-500/15 text-rose-700 dark:text-rose-400'
               }`}>
-                {hoveredRoom.isFree ? 'FREE' : 'OCCUPIED'}
+                {hoveredRoom.isFree ? 'Available' : 'In Session'}
               </span>
             </div>
 
@@ -438,7 +438,7 @@ export default function Building3DMap({ selectedDay, selectedPeriod, onSelectRoo
             <div className="pt-1 text-[11px] font-medium border-t border-black/[0.06] dark:border-white/[0.06]">
               {hoveredRoom.isFree ? (
                 <span className="text-emerald-600 dark:text-emerald-400">
-                  ⚡ Free for {(hoveredRoom.freeDurationMinutes / 60).toFixed(1)} hrs (until {hoveredRoom.freeUntilTime})
+                  Free for {(hoveredRoom.freeDurationMinutes / 60).toFixed(1)} hrs (until {hoveredRoom.freeUntilTime})
                 </span>
               ) : (
                 <span className="text-rose-600 dark:text-rose-400">
@@ -447,8 +447,8 @@ export default function Building3DMap({ selectedDay, selectedPeriod, onSelectRoo
               )}
             </div>
 
-            <div className="text-[10px] text-blue-500 font-semibold pt-0.5">
-              Click to open countdown & squad invite →
+            <div className="text-[10px] text-blue-600 dark:text-blue-400 font-medium pt-0.5">
+              Click to view countdown & squad invite
             </div>
           </div>
         )}
@@ -505,10 +505,10 @@ export default function Building3DMap({ selectedDay, selectedPeriod, onSelectRoo
           </div>
 
           <div className="text-[11px] text-zinc-500 font-medium hidden md:flex items-center gap-2">
-            <span>🖱️ Drag to rotate</span>
-            <span>·</span>
+            <span>Drag to rotate</span>
+            <span className="text-zinc-300 dark:text-zinc-700">·</span>
             <span>Scroll to zoom</span>
-            <span>·</span>
+            <span className="text-zinc-300 dark:text-zinc-700">·</span>
             <span>Right-click to pan</span>
           </div>
         </div>

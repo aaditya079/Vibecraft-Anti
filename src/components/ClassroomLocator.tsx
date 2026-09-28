@@ -170,15 +170,15 @@ export default function ClassroomLocator() {
       <div className="relative overflow-hidden rounded-3xl bg-linear-to-b from-zinc-500/[0.05] via-transparent to-transparent border border-black/[0.06] dark:border-white/[0.08] p-6 sm:p-8 backdrop-blur-2xl">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-linear-to-r from-blue-500/10 to-indigo-500/10 border border-blue-500/25 text-blue-600 dark:text-blue-400 text-xs font-semibold">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 text-xs font-medium">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Round 2 Finale · 3D Map, Live Countdown & Squad Share</span>
+              <span>Campus Space Intelligence</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 dark:text-white">
-              Free Classroom Locator
+              Free Classroom Tracker
             </h1>
             <p className="text-sm text-zinc-600 dark:text-zinc-400 max-w-2xl leading-relaxed">
-              Never get evicted 10 minutes into your study session. Real-time empty classroom detection cross-referenced across all 10 departmental timetables with guaranteed contiguous vacancy hours.
+              Find quiet study spaces with guaranteed vacancy windows. Real-time availability cross-referenced across all 10 departmental timetables with contiguous hours and team invites.
             </p>
           </div>
 
@@ -214,7 +214,7 @@ export default function ClassroomLocator() {
         {/* The AI Room Finder Smart Search Bar */}
         <div className="mt-8 space-y-3">
           <div className="relative group">
-            <div className="absolute -inset-0.5 bg-linear-to-r from-blue-500/30 to-indigo-500/30 rounded-2xl blur-sm opacity-50 group-hover:opacity-100 group-focus-within:opacity-100 transition duration-300" />
+            <div className="absolute -inset-0.5 bg-linear-to-r from-blue-500/20 to-indigo-500/20 rounded-2xl blur-sm opacity-50 group-hover:opacity-100 group-focus-within:opacity-100 transition duration-300" />
             <div className="relative flex items-center bg-white dark:bg-zinc-900 border border-black/[0.08] dark:border-white/[0.12] rounded-2xl shadow-sm px-4 py-3 gap-3">
               <Sparkles className="w-5 h-5 text-blue-500 dark:text-blue-400 shrink-0" />
               <input
@@ -222,7 +222,7 @@ export default function ClassroomLocator() {
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
                 onKeyDown={e => { if (e.key === 'Enter') handleSearchSubmit(); }}
-                placeholder='Type naturally: "I need an AC room on the ground floor for me and my team for the next 2 hours."'
+                placeholder='Ask naturally: "Need an AC room on 4th floor with power sockets for 4 people for 2 hours"'
                 className="w-full bg-transparent text-sm sm:text-base text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none"
               />
               {searchQuery && (
@@ -252,53 +252,50 @@ export default function ClassroomLocator() {
 
           {/* Quick Example Suggestion Chips */}
           <div className="flex flex-wrap items-center gap-2 pt-1">
-            <span className="text-xs text-zinc-600 dark:text-zinc-400 font-semibold mr-1">
-              Popular Queries:
+            <span className="text-xs text-zinc-500 font-medium mr-1">
+              Suggestions:
             </span>
             {PRESET_QUERIES.map((preset, idx) => (
               <button
                 key={idx}
                 onClick={() => handleSearchSubmit(preset)}
-                className="text-xs px-2.5 py-1 rounded-lg bg-black/[0.03] dark:bg-white/[0.04] hover:bg-blue-500/10 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-500/30 border border-black/[0.06] dark:border-white/[0.06] text-zinc-600 dark:text-zinc-400 transition text-left"
+                className="text-xs px-2.5 py-1 rounded-xl bg-black/[0.03] dark:bg-white/[0.04] hover:bg-blue-500/10 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-500/30 border border-black/[0.06] dark:border-white/[0.06] text-zinc-600 dark:text-zinc-400 transition text-left"
               >
                 {preset}
               </button>
             ))}
           </div>
 
-          {/* Phase 2 View Mode Switcher */}
+          {/* View Mode Switcher */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-5 border-t border-black/[0.06] dark:border-white/[0.06] mt-4">
-            <div className="flex items-center p-1 rounded-xl bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08]">
+            <nav className="flex items-center p-1 rounded-2xl bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08]" aria-label="Floor visualization mode">
               <button
                 onClick={() => setActiveViewMode('3d')}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 ${
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all flex items-center gap-2 ${
                   activeViewMode === '3d'
-                    ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-xs'
+                    ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-xs font-semibold'
                     : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
                 }`}
               >
-                <Compass className="w-3.5 h-3.5 text-blue-500" />
+                <Compass className={`w-3.5 h-3.5 ${activeViewMode === '3d' ? 'text-blue-500' : 'text-zinc-400'}`} />
                 <span>3D Campus Model</span>
-                <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold">Phase 2</span>
               </button>
               <button
                 onClick={() => setActiveViewMode('grid')}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 ${
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all flex items-center gap-2 ${
                   activeViewMode === 'grid'
-                    ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-xs'
+                    ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-xs font-semibold'
                     : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
                 }`}
               >
-                <Layers className="w-3.5 h-3.5 text-emerald-500" />
+                <Layers className={`w-3.5 h-3.5 ${activeViewMode === 'grid' ? 'text-emerald-500' : 'text-zinc-400'}`} />
                 <span>Floor-by-Floor Grid</span>
-                <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold">Phase 1</span>
               </button>
-            </div>
+            </nav>
 
             <div className="text-xs text-zinc-500 font-medium flex items-center gap-2">
-              <span>⏱️ Live Ticking Countdown</span>
-              <span>·</span>
-              <span>📲 WhatsApp Squad Dispatch</span>
+              <span className="w-2 h-2 rounded-full bg-emerald-500" />
+              <span>Real-time availability across 7 floors</span>
             </div>
           </div>
         </div>
@@ -694,14 +691,14 @@ export default function ClassroomLocator() {
 
                       {/* Status Indicator */}
                       {roomStatus.isFree ? (
-                        <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 text-xs font-semibold">
+                        <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 text-xs font-medium">
                           <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                          <span>FREE</span>
+                          <span>Available</span>
                         </div>
                       ) : (
-                        <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20 text-xs font-semibold">
+                        <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20 text-xs font-medium">
                           <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-                          <span>OCCUPIED</span>
+                          <span>In Session</span>
                         </div>
                       )}
                     </div>

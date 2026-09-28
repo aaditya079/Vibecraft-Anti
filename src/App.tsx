@@ -177,35 +177,33 @@ export default function App() {
             </div>
           </div>
 
-          {/* Segmented Switcher for Round 1 & Round 2 */}
-          <div className="flex items-center p-1 rounded-xl bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08]">
+          {/* Segmented Switcher */}
+          <nav className="flex items-center p-1 rounded-2xl bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08]" aria-label="Main application view">
             <button
               onClick={() => setAppMode('locator')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 ${
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all flex items-center gap-2 ${
                 appMode === 'locator'
-                  ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-xs'
+                  ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-xs font-semibold'
                   : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
               }`}
             >
-              <Compass className="w-3.5 h-3.5 text-blue-500" />
-              <span className="hidden sm:inline">Free Class Locator</span>
+              <Compass className={`w-3.5 h-3.5 ${appMode === 'locator' ? 'text-blue-500' : 'text-zinc-400'}`} />
+              <span className="hidden sm:inline">Classroom Locator</span>
               <span className="sm:hidden">Locator</span>
-              <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold">Round 2</span>
             </button>
             <button
               onClick={() => setAppMode('attendance')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 ${
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all flex items-center gap-2 ${
                 appMode === 'attendance'
-                  ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-xs'
+                  ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-xs font-semibold'
                   : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
               }`}
             >
-              <GraduationCap className="w-3.5 h-3.5 text-emerald-500" />
+              <GraduationCap className={`w-3.5 h-3.5 ${appMode === 'attendance' ? 'text-emerald-500' : 'text-zinc-400'}`} />
               <span className="hidden sm:inline">Attendance Advisor</span>
               <span className="sm:hidden">Attendance</span>
-              <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold">Round 1</span>
             </button>
-          </div>
+          </nav>
 
           <div className="flex items-center gap-2">
             <div className="hidden sm:flex items-center gap-2 px-3 py-1 rounded-full bg-black/[0.04] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.06] text-xs font-medium text-zinc-600 dark:text-zinc-400">
