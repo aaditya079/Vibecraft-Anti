@@ -93,7 +93,7 @@ If you skip all remaining ${results.totalClassesRemaining} classes in the semest
       `${day}: ${periods.filter(Boolean).join(', ') || 'No classes'}`
     ).join('\n');
 
-    const systemPrompt = `You are the Official Smart Attendance Advisor AI for college students at SRMIST, powered by Gemini 3.8 Flash for VibeCraft Season 1.
+    const systemPrompt = `You are the Official Smart Attendance Advisor AI for college students.
 Your tone is professional, clear, concise, and helpful (like Apple Intelligence).
 Provide accurate, math-backed responses.
 
@@ -118,7 +118,7 @@ RULES & POLICIES:
 2. Distinction / Dean's list requires 90%.
 3. If student asks "what if I miss 20 classes" or "what if I miss all of them", run the exact math using total classes left (${results.totalClassesRemaining}) and calculate the exact new attendance percentage.
 4. If student asks about sick leave starting tomorrow or a specific day, look at the timetable for those days, identify exact classes missed, and calculate the exact drop.
-5. On-Duty (OD) and Medical Leave credit missed classes as attended if approved by HOD.
+5. On-Duty (OD) and Medical Leave credit missed classes as attended if approved by academic authority.
 6. Format answers with clean bullets and calm, precise phrasing without excessive exclamation marks or emojis.`;
 
     const apiKey = getApiKey();
@@ -200,44 +200,44 @@ RULES & POLICIES:
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 z-50 px-4 py-2.5 rounded-full bg-zinc-900/90 hover:bg-zinc-800 text-white shadow-2xl border border-white/[0.12] backdrop-blur-2xl transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center gap-2.5"
+          className="fixed bottom-6 right-6 z-50 px-4 py-2.5 rounded-full bg-white/90 dark:bg-zinc-900/90 hover:bg-zinc-50 dark:hover:bg-zinc-800 text-zinc-900 dark:text-white shadow-xl dark:shadow-2xl border border-black/[0.08] dark:border-white/[0.12] backdrop-blur-2xl transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center gap-2.5"
         >
-          <div className="w-2 h-2 rounded-full bg-emerald-400"></div>
-          <span className="text-xs font-medium text-zinc-200">Attendance Advisor</span>
-          <span className="text-[10px] text-zinc-500 font-normal">AI</span>
+          <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
+          <span className="text-xs font-medium text-zinc-800 dark:text-zinc-200">Attendance Advisor</span>
+          <span className="text-[10px] text-zinc-400 dark:text-zinc-500 font-normal">AI</span>
         </button>
       )}
 
       {/* Apple Intelligence Style Dialog Window */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 z-50 w-full max-w-md bg-zinc-950/90 border border-white/[0.12] rounded-3xl shadow-2xl backdrop-blur-2xl overflow-hidden flex flex-col h-[560px] max-h-[85vh] transition-all">
+        <div className="fixed bottom-6 right-6 z-50 w-full max-w-md bg-white/95 dark:bg-zinc-950/90 border border-black/[0.08] dark:border-white/[0.12] rounded-3xl shadow-2xl backdrop-blur-2xl overflow-hidden flex flex-col h-[560px] max-h-[85vh] transition-all">
           
           {/* Chat Header */}
-          <div className="p-4 border-b border-white/[0.06] flex items-center justify-between bg-white/[0.02]">
+          <div className="p-4 border-b border-black/[0.06] dark:border-white/[0.06] flex items-center justify-between bg-black/[0.01] dark:bg-white/[0.02]">
             <div className="flex items-center gap-2.5">
-              <div className="w-7 h-7 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-zinc-300">
+              <div className="w-7 h-7 rounded-xl bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] flex items-center justify-center text-zinc-700 dark:text-zinc-300">
                 <Sparkles className="w-3.5 h-3.5" />
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h4 className="font-semibold text-xs text-white">
+                  <h4 className="font-semibold text-xs text-zinc-900 dark:text-white">
                     Attendance Advisor
                   </h4>
-                  <span className="text-[10px] text-zinc-500">Gemini 3.8</span>
+                  <span className="text-[10px] text-zinc-400 dark:text-zinc-500">Gemini 3.8</span>
                 </div>
-                <p className="text-[11px] text-zinc-400">{section.name}</p>
+                <p className="text-[11px] text-zinc-500 dark:text-zinc-400">{section.name}</p>
               </div>
             </div>
             <div className="flex items-center gap-1">
               <button
                 onClick={() => setIsOpen(false)}
-                className="p-1.5 rounded-lg hover:bg-white/[0.06] text-zinc-400 hover:text-white transition"
+                className="p-1.5 rounded-lg hover:bg-black/[0.04] dark:hover:bg-white/[0.06] text-zinc-400 hover:text-zinc-700 dark:hover:text-white transition"
               >
                 <Minimize2 className="w-3.5 h-3.5" />
               </button>
               <button
                 onClick={() => setIsOpen(false)}
-                className="p-1.5 rounded-lg hover:bg-white/[0.06] text-zinc-400 hover:text-white transition"
+                className="p-1.5 rounded-lg hover:bg-black/[0.04] dark:hover:bg-white/[0.06] text-zinc-400 hover:text-zinc-700 dark:hover:text-white transition"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
@@ -245,28 +245,28 @@ RULES & POLICIES:
           </div>
 
           {/* Quick Action Chips */}
-          <div className="px-3 py-2 border-b border-white/[0.04] flex gap-1.5 overflow-x-auto text-[11px] no-scrollbar bg-black/20">
+          <div className="px-3 py-2 border-b border-black/[0.04] dark:border-white/[0.04] flex gap-1.5 overflow-x-auto text-[11px] no-scrollbar bg-black/[0.02] dark:bg-black/20">
             <button
               onClick={() => handleSend("What if I miss 20 classes?")}
-              className="px-2.5 py-1 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-zinc-300 whitespace-nowrap transition"
+              className="px-2.5 py-1 rounded-full bg-black/[0.04] dark:bg-white/[0.04] hover:bg-black/[0.08] dark:hover:bg-white/[0.08] border border-black/[0.06] dark:border-white/[0.06] text-zinc-700 dark:text-zinc-300 whitespace-nowrap transition"
             >
               Miss 20 classes?
             </button>
             <button
               onClick={() => handleSend("What if I miss all remaining classes?")}
-              className="px-2.5 py-1 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-zinc-300 whitespace-nowrap transition"
+              className="px-2.5 py-1 rounded-full bg-black/[0.04] dark:bg-white/[0.04] hover:bg-black/[0.08] dark:hover:bg-white/[0.08] border border-black/[0.06] dark:border-white/[0.06] text-zinc-700 dark:text-zinc-300 whitespace-nowrap transition"
             >
               Miss all classes?
             </button>
             <button
               onClick={() => handleSend("If I take a 3-day sick leave starting tomorrow, will my attendance drop below 75%?")}
-              className="px-2.5 py-1 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-zinc-300 whitespace-nowrap transition"
+              className="px-2.5 py-1 rounded-full bg-black/[0.04] dark:bg-white/[0.04] hover:bg-black/[0.08] dark:hover:bg-white/[0.08] border border-black/[0.06] dark:border-white/[0.06] text-zinc-700 dark:text-zinc-300 whitespace-nowrap transition"
             >
               3-day leave impact
             </button>
             <button
               onClick={() => handleSend("How many classes can I safely bunk?")}
-              className="px-2.5 py-1 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-zinc-300 whitespace-nowrap transition"
+              className="px-2.5 py-1 rounded-full bg-black/[0.04] dark:bg-white/[0.04] hover:bg-black/[0.08] dark:hover:bg-white/[0.08] border border-black/[0.06] dark:border-white/[0.06] text-zinc-700 dark:text-zinc-300 whitespace-nowrap transition"
             >
               Safe bunk allowance
             </button>
@@ -282,24 +282,24 @@ RULES & POLICIES:
                 <div
                   className={`p-3 rounded-2xl max-w-[88%] leading-relaxed ${
                     msg.sender === 'user'
-                      ? 'bg-blue-600/90 text-white rounded-tr-sm'
-                      : 'bg-white/[0.04] border border-white/[0.06] text-zinc-200 rounded-tl-sm whitespace-pre-line'
+                      ? 'bg-blue-600 text-white rounded-tr-sm'
+                      : 'bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.06] text-zinc-800 dark:text-zinc-200 rounded-tl-sm whitespace-pre-line'
                   }`}
                 >
                   {msg.text}
                 </div>
                 {msg.modelTag && (
-                  <span className="text-[10px] text-zinc-500 mt-1 px-1">{msg.modelTag}</span>
+                  <span className="text-[10px] text-zinc-400 dark:text-zinc-500 mt-1 px-1">{msg.modelTag}</span>
                 )}
               </div>
             ))}
 
             {isTyping && (
-              <div className="flex items-center gap-2 text-zinc-400 p-2 text-xs">
+              <div className="flex items-center gap-2 text-zinc-500 p-2 text-xs">
                 <div className="w-1.5 h-1.5 rounded-full bg-zinc-400 animate-pulse"></div>
                 <div className="w-1.5 h-1.5 rounded-full bg-zinc-400 animate-pulse delay-150"></div>
                 <div className="w-1.5 h-1.5 rounded-full bg-zinc-400 animate-pulse delay-300"></div>
-                <span className="text-zinc-500">Calculating timetable projection...</span>
+                <span className="text-zinc-400">Calculating timetable projection...</span>
               </div>
             )}
             <div ref={messagesEndRef} />
@@ -311,7 +311,7 @@ RULES & POLICIES:
               e.preventDefault();
               handleSend();
             }}
-            className="p-3 border-t border-white/[0.06] bg-black/40 flex items-center gap-2"
+            className="p-3 border-t border-black/[0.06] dark:border-white/[0.06] bg-black/[0.01] dark:bg-black/40 flex items-center gap-2"
           >
             <div className="flex-1 relative flex items-center">
               <input
@@ -319,12 +319,12 @@ RULES & POLICIES:
                 placeholder="Ask about skips, leaves, or subjects..."
                 value={input}
                 onChange={e => setInput(e.target.value)}
-                className="w-full bg-zinc-900/90 border border-white/[0.1] rounded-full pl-3.5 pr-10 py-2 text-xs text-white focus:outline-none focus:border-white/30 transition placeholder:text-zinc-500"
+                className="w-full bg-white dark:bg-zinc-900/90 border border-black/[0.1] dark:border-white/[0.1] rounded-full pl-3.5 pr-10 py-2 text-xs text-zinc-900 dark:text-white focus:outline-none focus:border-zinc-400 dark:focus:border-white/30 transition placeholder:text-zinc-400 dark:placeholder:text-zinc-500 shadow-xs dark:shadow-none"
               />
               <button
                 type="submit"
                 disabled={!input.trim()}
-                className="absolute right-1.5 w-6 h-6 rounded-full bg-white text-black hover:bg-zinc-200 disabled:opacity-30 disabled:hover:bg-white flex items-center justify-center transition"
+                className="absolute right-1.5 w-6 h-6 rounded-full bg-zinc-900 text-white dark:bg-white dark:text-black hover:bg-zinc-700 dark:hover:bg-zinc-200 disabled:opacity-30 flex items-center justify-center transition"
               >
                 <ArrowUp className="w-3.5 h-3.5 stroke-[2.5]" />
               </button>
