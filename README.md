@@ -1,29 +1,29 @@
-# ⚡ VibeCraft — Attendance Intelligence & Leave Simulator
+# Attendance Intelligence & Academic Leave Simulator
 
-> **NTT presents · YUVA'26 · VIBECRAFT (Round 1: The Overworld — Phase 1 & Phase 2 Complete)**  
+> **Smart Attendance Predictor, Timetable Intelligence & Leave Simulator**  
 > **Repository:** [aaditya079/Vibecraft-Anti](https://github.com/aaditya079/Vibecraft-Anti)
 
 ---
 
-## 🎯 The Challenge & Scenario
+## 🎯 Academic Scenario
 College students constantly stress over their attendance and fall into detention (<75%) when it is mathematically too late to recover.  
 * **Semester Duration:** 29th August 2026 → 29th November 2026 (93 calendar days / 13 academic weeks).
-* **Timetables Ingested:** 10 full class sections from the official SRMIST SEEE dataset.
-* **Design Philosophy:** Minimalist, Apple-inspired dark aesthetic featuring frosted acrylic glass, restrained system semantics, and iOS segmented pill navigation.
+* **Timetables Ingested:** 10 full class sections from department schedule datasets.
+* **Design Philosophy:** Minimalist, Apple-inspired interface with seamless Light and Dark mode switching, frosted acrylic glass, and iOS segmented pill navigation.
 
 ---
 
-## 🚀 Unified Features (Phase 1 + Phase 2)
+## 🚀 Unified Features
 
-### 1. Phase 1: Core Mathematical Engine
+### 1. Core Mathematical Engine
 * **10 Section Timetables Ingested:** II BME, II ECE-DS A & B, III BME, III ECE A & B, III ECE-DS, IV ECE A & B, I ECE A.
-* **Date Intelligence:** Auto-detects event date (`Sep 28, 2026`) with dynamic target planning horizon selector.
+* **Date Intelligence:** Auto-detects reference planning date (`Sep 28, 2026`) with dynamic target planning horizon selector.
 * **Safe 75% vs Distinction 90%:** Exact count of remaining classes required to attend:
   $$\text{Classes To Attend}_{75} = \max\left(0, \lceil 0.75 \times T_{\text{total}} \rceil - A_{\text{attended}}\right)$$
 * **🚨 Critical Detention Warning:** Mathematically detects when $(A + R) < 0.75 \times T_{\text{total}}$ with high-clarity Apple Critical Alert banners and Web Audio API acoustic cues.
 * **Interactive Bunk Margin Simulator & Timetable View.**
 
-### 2. Phase 2: Visuals, Leaves, & The AI Assistant
+### 2. Visuals, Leaves, & The AI Assistant
 * 📊 **Visual Attendance Health Profiles:**
   * Interactive Bar Chart with Recharts showing current attendance vs mandatory 75% floor and 90% distinction lines.
   * Status health distribution donut chart (Compliant, Borderline, Deficit, Detention Precluded).
@@ -38,6 +38,8 @@ College students constantly stress over their attendance and fall into detention
     *"If I take a 3-day sick leave starting tomorrow, will my attendance drop below 75%?"*
   * Simulates upcoming classes day-by-day, computes exact drops, warns of risk subjects, and advises on On-Duty/medical submission.
   * Dual-engine resilience: Gemini 3.8 Flash with deterministic timetable fallback.
+* 🌓 **Dynamic Light & Dark Mode:**
+  * Native theme toggle with system preference detection and localStorage persistence.
 
 ---
 
