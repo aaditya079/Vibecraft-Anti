@@ -206,17 +206,33 @@ export default function RoomDetailModal({ roomStatus, onClose, dayName, periodNu
             <div className="mt-3 text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
               {isFree ? (
                 <>
-                  Free until <strong className="text-zinc-900 dark:text-white font-semibold">{freeUntilTime}</strong>.
-                  {nextClass ? (
-                    <span> Next lecture: <span className="text-zinc-800 dark:text-zinc-200">{nextClass.sectionName}</span> at {nextClass.startsAt}.</span>
+                  {secondsRemaining === 0 ? (
+                    <span className="text-amber-600 dark:text-amber-400 font-semibold inline-flex items-center gap-1.5">
+                      ⚠️ Session window ending. Please check if next class has arrived.
+                    </span>
                   ) : (
-                    <span> No subsequent classes scheduled for today!</span>
+                    <>
+                      Free until <strong className="text-zinc-900 dark:text-white font-semibold">{freeUntilTime}</strong>.
+                      {nextClass ? (
+                        <span> Next lecture: <span className="text-zinc-800 dark:text-zinc-200">{nextClass.sectionName}</span> at {nextClass.startsAt}.</span>
+                      ) : (
+                        <span> No subsequent classes scheduled for today!</span>
+                      )}
+                    </>
                   )}
                 </>
               ) : (
                 <>
-                  In session: <strong className="text-zinc-900 dark:text-white font-semibold">{currentOccupant?.sectionName}</strong> ({currentOccupant?.subjectName}).
-                  <span> Finishes at {currentOccupant?.untilTime}.</span>
+                  {secondsRemaining === 0 ? (
+                    <span className="text-emerald-600 dark:text-emerald-400 font-semibold inline-flex items-center gap-1.5">
+                      ✅ Current class ending now. Room transition in progress.
+                    </span>
+                  ) : (
+                    <>
+                      In session: <strong className="text-zinc-900 dark:text-white font-semibold">{currentOccupant?.sectionName}</strong> ({currentOccupant?.subjectName}).
+                      <span> Finishes at {currentOccupant?.untilTime}.</span>
+                    </>
+                  )}
                 </>
               )}
             </div>

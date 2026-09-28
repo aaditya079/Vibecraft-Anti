@@ -497,15 +497,17 @@ function mapSectionOccupancyToRooms(): Record<string, Record<DayOfWeek, RoomOccu
 
         if (nameUpper.includes('WORKSHOP') || codeUpper.includes('MES101L')) {
           targetRoomId = 'ist-020';
-        } else if (nameUpper.includes('PCB') || codeUpper.includes('BTB102J')) {
+        } else if (nameUpper.includes('PCB') || codeUpper.includes('BTB102J') || codeUpper.includes('21ECC211L') || codeUpper.includes('21BMC204L') || codeUpper.includes('LAB-MPMC')) {
           targetRoomId = 'ist-108';
-        } else if (nameUpper.includes('PROGRAMMING') || codeUpper.includes('CSS101J')) {
+        } else if (codeUpper.includes('21ECC311L')) {
+          targetRoomId = 'ist-618';
+        } else if (codeUpper.includes('21ECC402L') || nameUpper.includes('PROGRAMMING') || codeUpper.includes('CSS101J')) {
           targetRoomId = 'ist-617';
-        } else if (facUpper.includes('TB-106') || facUpper.includes('CDC-TB-106')) {
+        } else if (facUpper.includes('TB-106') || facUpper.includes('CDC-TB-106') || nameUpper.includes('VERBAL REASONING')) {
           targetRoomId = 'tb-106';
-        } else if (facUpper.includes('625') || facUpper.includes('CDC-625') || facUpper.includes('CDC / 625')) {
+        } else if (facUpper.includes('625') || facUpper.includes('CDC-625') || facUpper.includes('CDC / 625') || nameUpper.includes('LOGICAL THINKING') || nameUpper.includes('ANALYTICAL')) {
           targetRoomId = 'ist-625';
-        } else if (codeUpper.includes('21LEH104T') || nameUpper.includes('GERMAN')) {
+        } else if (codeUpper.includes('21LEH104T') || nameUpper.includes('GERMAN') || nameUpper.includes('FOREIGN')) {
           targetRoomId = 'ist-626';
         } else if (codeUpper.includes('GNM102L') || nameUpper.includes('NSS')) {
           targetRoomId = 'ist-201';

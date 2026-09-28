@@ -47,6 +47,7 @@ export interface SearchResult {
     teamSize?: number;
     hasProjector?: boolean;
     hasPowerSockets?: boolean;
+    targetType?: string;
     summaryText: string;
   };
   matchedRooms: (RoomRealTimeStatus & { matchScore: number; matchReasons: string[] })[];
@@ -217,31 +218,58 @@ export function parseNaturalLanguageQuery(
 ): SearchResult {
   const query = rawQuery.toLowerCase();
 
-  // Floor extraction
+  // Day extraction if user specified a future day
+  let evalDay: DayOfWeek = day;
+  if (query.includes('monday')) evalDay = 'Monday';
+  else if (query.includes('tuesday')) evalDay = 'Tuesday';
+  else if (query.includes('wednesday')) evalDay = 'Wednesday';
+  else if (query.includes('thursday')) evalDay = 'Thursday';
+  else if (query.includes('friday')) evalDay = 'Friday';
+
+  // Period / Time extraction if user specified
+  let evalPeriod = currentPeriod;
+  if (query.includes('afternoon') || query.includes('post lunch') || query.includes('2 pm') || query.includes('14:00')) {
+    evalPeriod = 6;
+  } else if (query.includes('morning') || query.includes('forenoon') || query.includes('10 am') || query.includes('09:00')) {
+    evalPeriod = 2;
+  } else if (query.includes('lunch')) {
+    evalPeriod = 5;
+  }
+
+  // Floor extraction with word boundary regex
   let floor: string | undefined;
-  if (query.includes('ground') || query.includes('gf') || query.includes('floor 0') || query.includes('level 0')) {
+  if (/\b(ground|gf|floor 0|level 0)\b/i.test(query)) {
     floor = 'Ground Floor';
-  } else if (query.includes('1st') || query.includes('first floor') || query.includes('floor 1')) {
+  } else if (/\b(1st|first|floor 1|level 1)\b/i.test(query)) {
     floor = '1st Floor';
-  } else if (query.includes('2nd') || query.includes('second floor') || query.includes('floor 2')) {
+  } else if (/\b(2nd|second|floor 2|level 2)\b/i.test(query)) {
     floor = '2nd Floor';
-  } else if (query.includes('4th') || query.includes('fourth floor') || query.includes('floor 4')) {
+  } else if (/\b(4th|fourth|floor 4|level 4)\b/i.test(query)) {
     floor = '4th Floor';
-  } else if (query.includes('5th') || query.includes('fifth floor') || query.includes('floor 5')) {
+  } else if (/\b(5th|fifth|floor 5|level 5)\b/i.test(query)) {
     floor = '5th Floor';
-  } else if (query.includes('6th') || query.includes('sixth floor') || query.includes('floor 6')) {
+  } else if (/\b(6th|sixth|floor 6|level 6)\b/i.test(query)) {
     floor = '6th Floor';
-  } else if (query.includes('7th') || query.includes('seventh floor') || query.includes('top floor') || query.includes('floor 7')) {
+  } else if (/\b(7th|seventh|top floor|floor 7|level 7)\b/i.test(query)) {
     floor = '7th Floor';
   }
 
-  // AC extraction
+  // AC extraction with word boundary to avoid matching words like 'capacity'
   let isAC: boolean | undefined;
-  if (query.includes(' ac') || query.includes('air condition') || query.includes('air-condition') || query.includes('with ac')) {
-    isAC = true;
-  } else if (query.includes('non-ac') || query.includes('no ac')) {
+  const wantsAC = /\bac\b/i.test(query) || /air-?conditioned?/i.test(query) || query.includes('climate control') || query.includes('cooling');
+  const wantsNonAC = /\bnon-?ac\b/i.test(query) || query.includes('without ac') || query.includes('no ac');
+  if (wantsNonAC) {
     isAC = false;
+  } else if (wantsAC) {
+    isAC = true;
   }
+
+  // Room Type extraction
+  let targetType: string | undefined;
+  if (/\b(workshop|fabrication)\b/i.test(query)) targetType = 'Workshop';
+  else if (/\b(lab|laboratory|coding lab|computer lab|pcb)\b/i.test(query)) targetType = 'Laboratory';
+  else if (/\b(seminar|amphitheatre|theatre|hall)\b/i.test(query)) targetType = 'Seminar Hall';
+  else if (/\b(discussion|collab|study room|pod)\b/i.test(query)) targetType = 'Discussion Room';
 
   // Duration extraction
   let durationHours = 1;
@@ -250,14 +278,14 @@ export function parseNaturalLanguageQuery(
     durationHours = parseInt(hourMatch[1], 10);
   } else if (query.includes('half an hour') || query.includes('30 mins') || query.includes('30 min')) {
     durationHours = 0.5;
-  } else if (query.includes('rest of the day') || query.includes('whole day') || query.includes('afternoon')) {
-    durationHours = 3;
+  } else if (query.includes('rest of the day') || query.includes('whole day')) {
+    durationHours = 3.5;
   }
-  const minRequiredMinutes = durationHours * 55; // give 5 mins grace
+  const minRequiredMinutes = durationHours * 50;
 
   // Team size / Capacity
   let teamSize = 1;
-  const teamMatch = query.match(/(\d+)\s*(?:people|persons|members|students|folks|team)/);
+  const teamMatch = query.match(/(\d+)\s*(?:people|persons|members|students|folks|team|seats)/);
   if (teamMatch) {
     teamSize = parseInt(teamMatch[1], 10);
   } else if (query.includes('team') || query.includes('group') || query.includes('project') || query.includes('presentation')) {
@@ -272,18 +300,23 @@ export function parseNaturalLanguageQuery(
 
   // Power outlets / Charging
   let hasPowerSockets: boolean | undefined;
-  if (query.includes('power') || query.includes('charging') || query.includes('socket') || query.includes('laptop') || query.includes('charge')) {
+  if (query.includes('power') || query.includes('charging') || query.includes('socket') || query.includes('laptop') || query.includes('charge') || query.includes('outlet')) {
     hasPowerSockets = true;
   }
 
-  // Specific room code search (e.g. "ist 602", "tb 106")
-  const roomCodeMatch = query.match(/(?:ist|tb)\s*-?\s*(\d{3})/i);
-  const targetCode = roomCodeMatch ? roomCodeMatch[0].replace('-', ' ').toUpperCase() : undefined;
+  // Specific room code search (e.g. "ist 602", "tb 106", "ist 20")
+  const roomCodeMatch = query.match(/(?:ist|tb)\s*-?\s*(\d{2,3})/i);
+  let targetCode = roomCodeMatch ? roomCodeMatch[0].replace('-', ' ').toUpperCase() : undefined;
+  if (targetCode && targetCode.includes('IST 20')) targetCode = 'IST 020';
+  if (targetCode && targetCode.includes('IST 21')) targetCode = 'IST 021';
 
   // Build summary text
   const summaryParts: string[] = [];
   if (floor) summaryParts.push(floor);
-  if (isAC) summaryParts.push('Air Conditioned');
+  if (targetType) summaryParts.push(targetType);
+  if (isAC !== undefined) summaryParts.push(isAC ? 'Air Conditioned' : 'Non-AC');
+  if (evalDay !== day) summaryParts.push(`On ${evalDay}`);
+  if (evalPeriod !== currentPeriod) summaryParts.push(`Period ${evalPeriod}`);
   summaryParts.push(`${durationHours} hr${durationHours > 1 ? 's' : ''} duration`);
   if (teamSize > 1) summaryParts.push(`Seats ${teamSize}+`);
   if (hasProjector) summaryParts.push('Projector needed');
@@ -293,7 +326,7 @@ export function parseNaturalLanguageQuery(
   const scoredRooms: (RoomRealTimeStatus & { matchScore: number; matchReasons: string[] })[] = [];
 
   CAMPUS_ROOMS.forEach(room => {
-    const status = getRoomStatus(room, day, currentPeriod);
+    const status = getRoomStatus(room, evalDay, evalPeriod);
     let score = 0;
     const matchReasons: string[] = [];
 
@@ -310,6 +343,16 @@ export function parseNaturalLanguageQuery(
     } else {
       score += 30; // base score for being free
       matchReasons.push('Available now');
+    }
+
+    // Target Type bonus / penalty
+    if (targetType) {
+      if (room.type.toLowerCase().includes(targetType.toLowerCase())) {
+        score += 35;
+        matchReasons.push(`Type: ${room.type}`);
+      } else {
+        score -= 25;
+      }
     }
 
     // Floor filter
@@ -388,6 +431,7 @@ export function parseNaturalLanguageQuery(
       teamSize,
       hasProjector,
       hasPowerSockets,
+      targetType,
       summaryText: summaryParts.join(' · ')
     },
     matchedRooms: scoredRooms,
